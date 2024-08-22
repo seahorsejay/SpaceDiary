@@ -1,27 +1,24 @@
 package com.example.galacticbook.presentation.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import com.example.galacticbook.R
+import androidx.compose.ui.unit.sp
+import coil.compose.SubcomposeAsyncImage
 import com.example.galacticbook.model.CharacterDetails
 import com.example.galacticbook.model.Location
 import com.example.galacticbook.model.Origin
@@ -34,27 +31,68 @@ fun CharacterDetailsScreen(
     Scaffold { paddingValues ->
         val padding = paddingValues
         Column {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    model = character.url
-                ),
-                contentDescription = "character image",
+            SubcomposeAsyncImage(
+                model = character.url,
+                contentDescription = "",
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(16.dp)
                     .fillMaxWidth()
-                    .height(100.dp)
-                    .border(4.dp, Color.Blue),
-                contentScale = ContentScale.Crop
-            )
-            Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-                Text(text = "Name:")
-                Text(text = character.name)
-            }
+                    .aspectRatio(1f)
+                    .clip(
+                        RoundedCornerShape(12.dp)
+                    ),
+                loading = {
 
+                })
+            DetailsRow(details = Details(title = "Status", value = character.status))
+            DetailsRow(details = Details(title = "Name", value = character.name))
+            DetailsRow(details = Details(title = "Species", value = character.species))
+            DetailsRow(details = Details(title = "type", value = character.type ?: "-"))
+            DetailsRow(details = Details(title = "Gender", value = character.gender))
         }
     }
 
 }
+
+@Composable
+fun DetailsRow(
+    details: Details
+) {
+    Row(
+        modifier = Modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "${details.title}: ",
+            fontStyle = FontStyle.Italic,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.primary
+
+        )
+
+        Text(
+            modifier = Modifier.padding(start = 8.dp),
+            text = details.value,
+            fontStyle = FontStyle.Normal,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+    }
+}
+
+@Preview
+@Composable
+fun DetailsRowPreview() {
+    DetailsRow(details = Details("Species", "Alien"))
+}
+
+data class Details(
+    val title: String,
+    val value: String
+)
 
 @Preview
 @Composable

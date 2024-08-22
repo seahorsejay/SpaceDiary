@@ -11,6 +11,6 @@ data class CharacterDetails(
     val origin: Origin,
     val species: String,
     val status: String,
-    val type: String,
+    val type: String?,
     val url: String
 )

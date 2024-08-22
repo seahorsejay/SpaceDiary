@@ -46,6 +46,7 @@ rxjava3 = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxja
 rxandroid3 = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 retrofit-rxjava3-adapter = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
 rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 [bundles]
 retrofit = ["retrofit", "retrofit-converter-gson"]
