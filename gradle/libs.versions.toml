@@ -16,7 +16,8 @@ splashScreen = "1.0.1"
 rxjava = "3.1.2"
 rxandroid = "3.0.0"
 rxkotlin = "3.0.1"
-
+composeNavigation = "2.8.0-alpha08"
+serialization = "1.6.3"
 
 
 [libraries]
@@ -47,6 +48,8 @@ rxandroid3 = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref =
 retrofit-rxjava3-adapter = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "retrofit" }
 rxkotlin = { group = "io.reactivex.rxjava3", name = "rxkotlin", version.ref = "rxkotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 [bundles]
 retrofit = ["retrofit", "retrofit-converter-gson"]
@@ -57,4 +60,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

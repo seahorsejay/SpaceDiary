@@ -1,6 +1,9 @@
 package com.example.galacticbook.domain
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleTransformer
@@ -13,6 +16,11 @@ class GalacticViewModel @Inject constructor(
     private val repository: GalacticRepository
 ) : BaseViewModel() {
 
+    var galaxyState: GalaxyState by mutableStateOf(GalaxyState.Loading)
+        private set
+    var characterState: CharacterState by mutableStateOf(CharacterState.Loading)
+        private set
+
     fun fetchAliens(page: Int = 2) {
         repository.fetchAliens(page)
             .compose { upstream ->
@@ -21,11 +29,11 @@ class GalacticViewModel @Inject constructor(
             }
             .subscribe(
                 { data ->
-                    Log.e("CHECK DATA", "$data")
+                    galaxyState = GalaxyState.Content(data)
                 },
                 { error ->
-                    Log.e("ERROR", "${error.message}")
-
+                    galaxyState =
+                        GalaxyState.Error(error.message ?: "Looks something was wrong")
                 }).addTo(bag3)
     }
 
@@ -37,10 +45,11 @@ class GalacticViewModel @Inject constructor(
             }
             .subscribe(
                 { data ->
-                    Log.e("CHECK DATA", "$data")
+                    characterState = CharacterState.Content(data)
                 },
                 { error ->
-                    Log.e("ERROR", "${error.message}")
+                    characterState =
+                        CharacterState.Error(error.message ?: "Looks something was wrong")
                 }).addTo(bag3)
     }
 }
